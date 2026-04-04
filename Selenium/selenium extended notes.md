@@ -40,16 +40,16 @@ git push
 
 ### Adding on browser:-
 
-- It is a plugin tool for browser 
-- Open edge browser or firefox 
-- Type selenium ide edge
-- Click on selenium ide edge add-on
-- you need to add this plugin/add-on
-- Click on get and add Extension
-- you can find it in manage extentions on top right of the browser(puzzle emoji)
+- It is a plugin tool for browser .
+- Open edge browser or firefox .
+- Type selenium ide edge.
+- Click on selenium ide edge add-on.
+- you need to add this plugin/add-on.
+- Click on get and add Extension.
+- you can find it in manage extentions on top right of the browser(puzzle emoji).
 ----
 
-### **Record a new test in a new project**
+## **Record a new test in a new project**
 - it will record the keyboard and mouse operation which we perform on an web application during testing and it will generate the test script
 
 - To rec:-
@@ -62,7 +62,7 @@ once stopped u need to provide script name - ok
 u can run current test, also it will start and run the browser enter details on its own
 ---
 
-### **How does it work? - it uses locators**
+## **How does it work? - it uses locators**
 
 - **Manual way** :-
 create a new project - name - ok
@@ -89,7 +89,7 @@ supports all browser
 - we can also perform parallel web testing
 ---
 
-### **software configuration is important**
+### **Software configuration is important:**
 
 **making new maven project -** 
 - file->new->maven project->name,checkbox(create simple project)->next
@@ -3436,7 +3436,7 @@ public class ExecultionClass {
 
 ## **2) Without Page Factory**
 
-*(Page class)*
+## *(Page class)*
 
 package packageobjectmodel;
 
@@ -3544,7 +3544,7 @@ public class POM_WithPageFactory {
 	
 }
 
-*(Test execution class)*
+## *(Test execution class)*
 
 package packageobjectmodel;
 
