@@ -1,3 +1,9 @@
+git add .
+git commit -m "first commit"
+git push
+
+
+
 # **SELENIUM :**
 
 ->Selenium mad by google in **2008**
@@ -3083,22 +3089,500 @@ Reporter.Log("UPLOAD MODE IS DISABLED", true);
 }
 
 
+APACHE POI
+
+Add two dependencies from Maven depositary->search bar (Apache POi)->click on first link ->
+scroll down ->copy the code
 
 
+<!-- Source: https://mvnrepository.com/artifact/org.apache.poi/poi -->
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi</artifactId>
+    <version>5.5.1</version>
+    <scope>compile</scope>
+</dependency>
+
+<!-- Source: https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+<dependency>
+<groupId>org.apache.poi</groupId>
+<artifactId>poi-ooxml</artifactId>
+<version>5.5.1</version>
+<scope>compile</scope>
+</dependency>
 
 
+Ex.(reading data from excel file)
+
+public class Datadriventesting_ApachePoi {
+	
+	static WebDriver driver;
+	
+	public void Demowebshopregister() throws IOException {
+
+		File f = new File("C:\\Users\\Desktop\\testdata123.xlsx");
+
+		FileInputStream fis=new FileInputStream(f);
+
+		XSSFWorkbook wb= new XSSFWorkbook(fis);
+
+		XSSFSheet ws = wb.getSheet("Sheet1");
+
+		int rows_count = ws.getPhysicalNumberOfRows();
+
+		Reporter.log("no of rows in excel sheet is="+rows_count,true);
+
+		int cols_count = ws.getRow(0).getPhysicalNumberOfCells();
+
+		Reporter.log("no of colums in excel sheet is="+cols_count,true);
+		
+		for(int i=1;i<rows_count;i++) {
+
+			String firstname = ws.getRow(i).getCell(0).getStringCellValue();
+			String lastname = ws.getRow(i).getCell(1).getStringCellValue();
+
+			String emailid=ws.getRow(i).getCell(2).getStringCellValue(); 
+			String pwd=ws.getRow(i).getCell(3).getStringCellValue();
+
+			String cpwd=ws.getRow(i).getCell(4).getStringCellValue();
+
+			driver = new ChromeDriver();
+
+			driver.get("https://demowebshop.tricentis.com/");
+
+			driver.manage().window().maximize();
+
+			driver.findElement(By.linkText("Register")).click();
+			
+			driver.findElement(By.cssSelector("#gender-male")).click();
+
+			driver.findElement(By.id("FirstName")).sendKeys(firstname);
+
+			driver.findElement(By.name("LastName")).sendKeys(lastname);
+
+			driver.findElement(By.id("Email")).sendKeys(emailid);
+
+			driver.findElement(By.name("Password")).sendKeys(pwd);
+
+			driver.findElement(By.name("Confirm Password")).sendKeys(cpwd);
+
+			driver.findElement(By.name("register-button")).click();
+		}
+	}
 
 
+HOW TO HANDLE DIFFERENT WINDOWS(WINDOWS HANDLING):
 
 
+--> Windows are two types
+ 
+1) Static windows:
+ 
+--> Name of the window will be always constant.
+ 
+driver.switchTo().window("nameOrHandle")
+ 
+ 
+Switch the focus to the window with the given name/handle.
+ 
+ex:
+ 
+driver.switchTo().window("Login");
+ 
+2) Dynamic windows:
+ 
+--> Name of the windows will change dynamically,means everytime 
+when we load page name will change like
+ 
+fisrstTime:name=login123 
+SecoundTime:name=login0987
+ 
+--> To overcome such situations , we can use below concept
+ 
+getWindowHandles();
+ 
+syn:
+ 
+set<String> pageHandles=driver.getWindowHandles();
+ 
+--> It will return handles of all opened windows.
+ 
+for(String a:all_windows)
+ 
+for(int i=1;i<=count;i++)
+ 
+ 
+--> If we wants to come back to main window , we can use below command.
+ 
+driver.switchTo().defaultContent();
 
 
+EX:
 
+public class HandlingWindows {
+	
+	
+	static WebDriver driver;
+	@Test
+	public void multipletabs() throws InterruptedException {
+		
+		driver = new ChromeDriver();
+		driver.get("https://opensource-demo.orangehrmlive.com/");
+		driver.manage().window().maximize();
+		Thread.sleep(3000);
+		
+		driver.findElement(By.xpath("//*[text()='OrangeHRM, Inc']")).click();
+		Thread.sleep(3000);
+		
+		switchtotab(1);		
+		System.out.println("Title of 2nd Tab is"+driver.getTitle());
+		Thread.sleep(4000);
+		driver.findElement(By.xpath("//*[text()='Contact Sales']")).click();
+		
+		switchtotab(0);
+		System.out.println("Title of 1st Tab is"+driver.getTitle());
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//*[@placeholder='Username']")).sendKeys("Admin");
+		driver.findElement(By.xpath("//*[@type='password']")).sendKeys("admin123");
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//*[@type='submit']")).click();
+		Thread.sleep(4000);
+		
+		switchtotab(1);
+		System.out.println("Title of 2nd Tab is"+driver.getTitle());
+		Thread.sleep(3000);
 
+		driver.findElement(By.xpath("//*[text()='Contact Sales']")).click();
+		driver.findElement(By.id("Form_getForm_FullName")).sendKeys("John Doe");
+		driver.findElement(By.id("Form_getForm_Email")).sendKeys("doe.john12@gmail.com");
+		Thread.sleep(3000);
+	
+		switchtotab(0);
+		System.out.println("Title of 1st Tab is"+driver.getTitle());
+		Thread.sleep(3000);
+		
+		
+	}
+	
+	public void switchtotab(int index) { 
 
+		String windowtab=null;
 
+		Set<String> tabs= driver.getWindowHandles();
 
+		Iterator<String> obj= tabs.iterator();
 
+		for(int i=0;i<=index;i++) {
+			
+			windowtab= obj.next();
+		}
+		driver.switchTo().window(windowtab);
 
+		}
 
+# **PAGE OBJECT MODEL(POM):**
 
+- POM is a design pattern used in test automation.
+
+- It is the framework in which one can create Object Repository for web Ul elements like buttons, links, texts using locator information.
+
+- We also provide information about the actions to be done like Sendkeys, Select, click etc.
+
+- We need to create the page class for each webpage in the application.
+
+- It becomes useful to create abstraction for the webpage called page object.
+
+- These page objects represent the things being filled in or clicked for examination context.
+
+### ** WHY POM :**
+- Reusability
+- Eliminate Duplicity
+
+## Advantages of Page object model
+
+**Key Advantages**
+
+- Separation between code for Test automation and web page-specific code like locators and their layout.
+
+- It can reduce or eliminate duplicity in the test code -Reusability of code is more
+
+- Well-ordered and organized code structure -improves readability and gives interactive documentation
+
+- Maintenance of test script is easy.
+
+- Easy to understand
+
+## **POM IMPLEMENTATION:**
+
+- With Page Factory
+- Without Page Factory
+
+### **1) With Page Factory**
+
+*Page Class:*
+
+package packageobjectmodel;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+//POM
+public class POM_WithoutPageFactory {
+	
+	WebDriver driver;
+	
+	public POM_WithoutPageFactory(WebDriver driver) {
+		
+		this.driver = driver;
+		
+	}
+	
+	//Locators:
+	
+	By reglink = By.linkText("Register");
+	By gender = By.id("gender-male");
+	By fname = By.name("FirstName");
+	By lname = By.id("LastName");
+	By emailid = By.id("Email");
+	By pwd = By.id("Password");
+	By cpwd = By.name("ConfirmPassword");
+	By regbutton = By.name("register-button");
+	
+	//Login Locators:
+	
+	By loginlink = By.linkText("Log in");
+	By email = By.id("Email");
+	By pass = By.id("Password");
+	By lognbtn = By.xpath("//*[@value='Log in']");
+	
+	//Logout locators:
+	
+	By logout = By.linkText("Log out");
+	
+	
+	//Implement the method for register functionality
+	
+	public void Register() {
+		
+		driver.findElement(reglink).click();
+		driver.findElement(gender).click();
+		driver.findElement(fname).sendKeys("Divya");
+		driver.findElement(lname).sendKeys("Ban");
+		
+		driver.findElement(emailid).sendKeys("Ram567@gmail.co");
+		driver.findElement(pwd).sendKeys("5768rty");
+		driver.findElement(cpwd).sendKeys("5768rty");
+		driver.findElement(regbutton).click();
+		driver.findElement(logout).click();
+		
+	}
+	
+	public void login() {
+		
+		driver.findElement(loginlink).click();
+		driver.findElement(email).sendKeys("Ram567@gmail.co");
+		driver.findElement(pass).sendKeys("5768rty");
+		driver.findElement(lognbtn).click();
+		
+	}
+	
+	public void Logout() {
+		
+		driver.findElement(logout).click();
+		
+	}
+
+}
+
+*Test Execution Class:*
+
+package packageobjectmodel;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+public class ExecultionClass {
+	
+	
+	static WebDriver driver;
+	@BeforeTest
+	public void LaunchBrowser() {
+		
+		driver = new ChromeDriver();
+		
+		driver.get("https://demowebshop.tricentis.com/");
+		driver.manage().window().maximize();
+	}
+	@Test
+	public void Actionsmethod() {
+		
+		POM_WithoutPageFactory obj = new POM_WithoutPageFactory(driver);
+		obj.Register();
+		obj.login();
+		obj.Logout();
+		
+	}
+	
+	@AfterTest
+	public void closebrowser() throws InterruptedException {
+		
+		Thread.sleep(4000);
+		driver.quit();
+	}
+}
+
+## **2) Without Page Factory**
+
+*(Page class)*
+
+package packageobjectmodel;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
+
+//POM
+public class POM_WithPageFactory {
+	
+	WebDriver driver;
+
+	public POM_WithPageFactory(WebDriver driver) {
+
+		this.driver = driver;
+		PageFactory.initElements(driver, this);
+
+	}
+	
+	//LOCATORS:
+	
+	@FindBy(how = How.LINK_TEXT, using = "Register")
+	WebElement register;
+
+	@FindBy(id = "gender-male")
+	WebElement gender;
+
+	@FindBy(name = "FirstName")
+	WebElement fname;
+
+	@FindBy(name = "LastName")
+	WebElement lname;
+
+	@FindBy(id = "Email")
+	WebElement emailid;
+
+	@FindBy(id = "Password")
+	WebElement pwd;
+
+	@FindBy(name = "ConfirmPassword")
+	WebElement cpwd;
+
+	@FindBy(name = "register-button")
+	WebElement regbutton;
+
+	// Login Page
+
+	@FindBy(how = How.LINK_TEXT, using = "Log in")
+	WebElement login;
+
+	@FindBy(xpath = "//*[@name='Email']")
+	WebElement email;
+
+	@FindBy(id = "Password")
+	WebElement password;
+
+	@FindBy(xpath = "//*[@value='Log in']")
+	WebElement loginbutton;
+
+	// search
+
+	@FindBy(id = "small-searchterms")
+	WebElement search;
+
+	@FindBy(xpath = "//*[@value='Search']")
+	WebElement button;
+
+	// Logout
+
+	@FindBy(how = How.LINK_TEXT, using = "Log out")
+	WebElement logout;
+
+	**================= METHODS =================**
+
+	public void Registerpage() {
+
+		register.click();
+		gender.click();
+		fname.sendKeys("Mahdvi");
+		lname.sendKeys("Odel");
+		emailid.sendKeys("madhvi56@gmail.com");
+		pwd.sendKeys("Mercury903");
+		cpwd.sendKeys("Mercury903");
+		regbutton.click();
+		logout.click();
+	}
+
+	public void Loginmethod() {
+
+		login.click();
+		emailid.sendKeys("john.parker3421@gmail.com");
+		password.sendKeys("Mercury@123");
+		loginbutton.click();
+	}
+
+	public void searchbtn() {
+
+		search.click();
+		search.sendKeys("Health Book");
+		search.click();
+		button.click();
+	}
+	
+}
+
+*(Test execution class)*
+
+package packageobjectmodel;
+
+import java.time.Duration;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+public class Execution_withpage {
+	
+	static WebDriver driver;
+    @BeforeTest
+	public void LaunchBrowser() {
+
+		driver = new ChromeDriver();
+
+		driver.get("https://demowebshop.tricentis.com/");
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+	}
+    @Test
+	public void Actionsmethod() {
+
+		POM_WithPageFactory obj = new POM_WithPageFactory(driver);
+		obj.Registerpage();
+		obj.Loginmethod();
+		obj.searchbtn();
+		
+	}
+	
+    @AfterTest
+	public void closebrowser() throws InterruptedException {
+		
+		Thread.sleep(4000);
+		driver.quit();
+	}
+	
+}
