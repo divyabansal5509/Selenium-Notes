@@ -3957,31 +3957,31 @@ Extent Reports Library
 
 
 
-Class Name                    Method Description
+Class Name                                  -     Method Description
 
-ExtentSparkReporter           The ExtentSparkReporter creates a rich standalone HTML file. It allows several configuration options via the config() method. It supports both BDD and non-BDD test styles
-
-
+ExtentSparkReporter      =     The ExtentSparkReporter creates a rich standalone HTML file. It allows several configuration options via the config() method. It supports both BDD and non-BDD test styles
 
 
 
-ExtentReports                  The ExtentReports report client for starting reporters and building reports. For most applications, you should have one ExtentReports instance for the entire JVM
+
+
+ExtentReports        =          The ExtentReports report client for starting reporters and building reports. For most applications, you should have one ExtentReports instance for the entire JVM
 
 
 
-ExtentTest                      It defines a test. You can add logs, snapshots, assign author and categories to a test and its children
+ExtentTest           =           It defines a test. You can add logs, snapshots, assign author and categories to a test and its children
 
 
 
-MarkupHelper                   MarkupHelper is used to createLabel(), createCodeBlock(), createTable() in the report
+MarkupHelper         =          MarkupHelper is used to createLabel(), createCodeBlock(), createTable() in the report
 
 
 
-Status                         List of allowed status in log PASS, FAIL, FATAL, ERROR, WARNING, INFO, DEBUG, SKIP
+Status              =           List of allowed status in log PASS, FAIL, FATAL, ERROR, WARNING, INFO, DEBUG, SKIP
 
 
 
-ExtentColor                    ExtentColor enumeration allows to displav log message in different colors.
+ExtentColor       =             ExtentColor enumeration allows to displav log message in different colors.
 
 ADD DEPENDENCIES:
 
@@ -4075,7 +4075,9 @@ public class Sampleprogextentsreport {
   }
  
   @BeforeTest
+
   public void beforeTest() {
+
 	   //Constructs the file path for the report by combining the user's current directory with a timestamped HTML file name.
 	    String path=System.getProperty("user.dir")+"/ERResults/"+new SimpleDateFormat("dd-mm-yyyy-hh-mm-ss-ms").format(new Date())+".html";
 	    //Initializes the ExtentSparkReporter with the path, which will generate an HTML report at the specified location
@@ -4092,7 +4094,9 @@ public class Sampleprogextentsreport {
   }
  
   @AfterTest
+
   public void afterTest() {
+
 	  er.flush(); //Ensures that all the test results are written to the report file. Without this, the report will not be generated or updated.
   }
  
@@ -4149,6 +4153,7 @@ public class extendreportfordemowebshop {
 	 
 	  @AfterMethod
 	  public void afterMethod(ITestResult result) {
+
 		  //ITestResult result captures the result of the test method execution (whether it passed, failed, or skipped).
 		  if(result.getStatus()==ITestResult.SUCCESS)
 			 {
@@ -4166,6 +4171,7 @@ public class extendreportfordemowebshop {
 	 
 	  @BeforeTest
 	  public void beforeTest() {
+
 		   //Constructs the file path for the report by combining the user's current directory with a timestamped HTML file name.
 		    String path=System.getProperty("user.dir")+"/ERResults/"+new SimpleDateFormat("dd-mm-yyyy-hh-mm-ss-ms").format(new Date())+".html";
 		    //Initializes the ExtentSparkReporter with the path, which will generate an HTML report at the specified location
@@ -4179,10 +4185,13 @@ public class extendreportfordemowebshop {
 		    sr.config().setDocumentTitle("My Report 03"); //Sets the title of the report document.
 		    sr.config().setReportName("Extent Report"); //Sets the name of the report.
 		    sr.config().setTheme(Theme.DARK); //Configures the theme of the report to dark mode
+
 	  }
 	 
 	  @AfterTest
 	  public void afterTest() {
+
 		  er.flush(); //Ensures that all the test results are written to the report file. Without this, the report will not be generated or updated.
+
 	  }
 	 
