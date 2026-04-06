@@ -1,0 +1,260 @@
+## **INTRODUCTION FOR WEBDRIVER ARCHITECTURE:**
+
+1️⃣ Introduction to WebDriver Architecture
+
+WebDriver Architecture describes how Selenium WebDriver communicates with browsers to execute automation scripts.
+
+Core Idea
+
+Automation scripts interact with WebDriver API, which then communicates with the browser driver to control the browser.
+
+Basic Flow
+Test Script
+     ↓
+Selenium WebDriver API
+     ↓
+Browser Driver
+     ↓
+Browser
+Key Components
+
+1. Test Script
+
+Written using languages like Java, Python, C#
+Contains automation logic
+
+2. WebDriver API
+
+Provides methods and commands to interact with browsers
+
+3. Browser Driver
+
+Acts as bridge between WebDriver and browser
+
+Examples:
+
+ChromeDriver
+GeckoDriver
+EdgeDriver
+
+4. Browser
+
+Executes the commands sent by WebDriver
+2️⃣ Features of WebDriver
+Major Features
+
+✔ Direct Browser Communication
+No intermediate server required.
+
+✔ Cross-Browser Support
+Works with Chrome, Firefox, Edge, Safari.
+
+✔ Multiple Language Support
+Supports Java, Python, C#, JavaScript, Ruby.
+
+✔ Platform Independent
+Runs on Windows, Linux, and macOS.
+
+✔ Real User Interaction
+Simulates actual browser behavior.
+
+✔ Better Performance
+Faster compared to older Selenium tools.
+
+3️⃣ Maven Project with Dependencies
+
+Maven is a build automation and dependency management tool mainly used for Java projects.
+
+In Selenium projects, Maven helps to:
+
+Automatically download required libraries
+Manage project dependencies
+Maintain consistent project structure
+Advantages of Maven in Selenium
+
+✔ Automatic dependency management
+✔ Easy project configuration
+✔ Simplified build process
+✔ Integration with testing tools (TestNG, JUnit)
+
+4️⃣ Overview of Maven Project Structure
+
+A standard Maven project follows a predefined directory structure.
+
+ProjectName
+│
+├── src
+│   ├── main
+│   │   └── java
+│   │
+│   └── test
+│       └── java
+│
+├── pom.xml
+│
+└── target
+Important Folders
+
+src/main/java
+
+Application source code
+
+src/test/java
+
+Test automation scripts
+
+pom.xml
+
+Main configuration file
+
+target
+
+Stores compiled files and build outputs
+5️⃣ Maven Repository (3 Types)
+
+A Maven Repository stores all project dependencies and libraries.
+
+1️⃣ Local Repository
+Located on developer's system
+Stores downloaded dependencies locally
+
+Example path:
+
+C:\Users\Username\.m2\repository
+2️⃣ Central Repository
+Official Maven repository
+Available online
+
+Example:
+
+https://mvnrepository.com
+
+Used to download:
+
+Selenium libraries
+TestNG
+Other dependencies
+3️⃣ Remote Repository
+Hosted on company servers
+Used in large organizations
+
+Purpose:
+
+Share project libraries across teams
+6️⃣ Overview of pom.xml
+
+POM stands for Project Object Model.
+
+pom.xml is the main configuration file of a Maven project.
+
+Responsibilities
+Defines project information
+Manages dependencies
+Configures plugins
+Controls build process
+
+All required libraries for Selenium are added in pom.xml.
+
+7️⃣ pom.xml Components
+1️⃣ Project Information
+
+Contains basic project details.
+
+Example:
+
+<groupId>com.selenium</groupId>
+<artifactId>automation-project</artifactId>
+<version>1.0</version>
+2️⃣ Dependencies
+
+Defines external libraries needed for the project.
+
+Example:
+
+<dependencies>
+
+<dependency>
+<groupId>org.seleniumhq.selenium</groupId>
+<artifactId>selenium-java</artifactId>
+<version>4.20.0</version>
+</dependency>
+
+</dependencies>
+
+Purpose:
+
+Automatically download Selenium libraries.
+3️⃣ Plugins
+
+Plugins are used to extend Maven functionality.
+
+Example:
+
+Compiler plugin
+Test execution plugin
+8️⃣ Demo: Create a Simple Maven Project (Selenium + TestNG)
+Step 1: Create Maven Project
+
+In IDE (Eclipse / IntelliJ):
+
+File → New → Maven Project
+
+Select quickstart archetype.
+
+Step 2: Add Selenium Dependency
+
+Add in pom.xml:
+
+<dependency>
+<groupId>org.seleniumhq.selenium</groupId>
+<artifactId>selenium-java</artifactId>
+<version>4.20.0</version>
+</dependency>
+Step 3: Add TestNG Dependency
+<dependency>
+<groupId>org.testng</groupId>
+<artifactId>testng</artifactId>
+<version>7.9.0</version>
+<scope>test</scope>
+</dependency>
+Step 4: Update Maven Project
+
+In IDE:
+
+Right Click Project → Maven → Update Project
+
+This downloads required libraries.
+
+9️⃣ Steps for Software Configuration (Maven Project)
+Required Software
+
+1️⃣ Java JDK
+
+Install JDK
+Set JAVA_HOME
+
+2️⃣ IDE
+
+Common IDEs:
+
+Eclipse
+IntelliJ IDEA
+
+3️⃣ Maven
+
+Install Maven
+Configure Maven home
+
+Verify installation:
+
+mvn -version
+
+4️⃣ Browser Drivers
+
+Download required drivers:
+
+ChromeDriver
+GeckoDriver
+EdgeDriver
+
+Add drivers to system path or project folder.

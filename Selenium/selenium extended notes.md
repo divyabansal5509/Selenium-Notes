@@ -3406,7 +3406,6 @@ import org.testng.annotations.Test;
 
 public class ExecultionClass {
 	
-	
 	static WebDriver driver;
 	@BeforeTest
 	public void LaunchBrowser() {
@@ -3586,3 +3585,604 @@ public class Execution_withpage {
 	}
 	
 }
+
+## **2) Without Page Factory**
+
+*(Page class)*
+
+package packageobjectmodel;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
+
+//POM
+public class POM_WithPageFactory {
+	
+	WebDriver driver;
+
+	public POM_WithPageFactory(WebDriver driver) {
+
+		this.driver = driver;
+		PageFactory.initElements(driver, this);
+
+	}
+	
+	//LOCATORS:
+	
+	@FindBy(how = How.LINK_TEXT, using = "Register")
+	WebElement register;
+
+	@FindBy(id = "gender-male")
+	WebElement gender;
+
+	@FindBy(name = "FirstName")
+	WebElement fname;
+
+	@FindBy(name = "LastName")
+	WebElement lname;
+
+	@FindBy(id = "Email")
+	WebElement emailid;
+
+	@FindBy(id = "Password")
+	WebElement pwd;
+
+	@FindBy(name = "ConfirmPassword")
+	WebElement cpwd;
+
+	@FindBy(name = "register-button")
+	WebElement regbutton;
+
+	// Login Page
+
+	@FindBy(how = How.LINK_TEXT, using = "Log in")
+	WebElement login;
+
+	@FindBy(xpath = "//*[@name='Email']")
+	WebElement email;
+
+	@FindBy(id = "Password")
+	WebElement password;
+
+	@FindBy(xpath = "//*[@value='Log in']")
+	WebElement loginbutton;
+
+	// search
+
+	@FindBy(id = "small-searchterms")
+	WebElement search;
+
+	@FindBy(xpath = "//*[@value='Search']")
+	WebElement button;
+
+	// Logout
+
+	@FindBy(how = How.LINK_TEXT, using = "Log out")
+	WebElement logout;
+
+	// ================= METHODS =================
+
+	public void Registerpage() {
+
+		register.click();
+		gender.click();
+		fname.sendKeys("Mahdvi");
+		lname.sendKeys("Odel");
+		emailid.sendKeys("madhvi56@gmail.com");
+		pwd.sendKeys("Mercury903");
+		cpwd.sendKeys("Mercury903");
+		regbutton.click();
+		logout.click();
+	}
+
+	public void Loginmethod() {
+
+		login.click();
+		emailid.sendKeys("john.parker3421@gmail.com");
+		password.sendKeys("Mercury@123");
+		loginbutton.click();
+	}
+
+	public void searchbtn() {
+
+		search.click();
+		search.sendKeys("Health Book");
+		search.click();
+		button.click();
+	}
+	
+}
+
+*(Test execution class)*
+
+package packageobjectmodel;
+
+import java.time.Duration;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+public class Execution_withpage {
+	
+	static WebDriver driver;
+    @BeforeTest
+	public void LaunchBrowser() {
+
+		driver = new ChromeDriver();
+
+		driver.get("https://demowebshop.tricentis.com/");
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+	}
+    @Test
+	public void Actionsmethod() {
+
+		POM_WithPageFactory obj = new POM_WithPageFactory(driver);
+		obj.Registerpage();
+		obj.Loginmethod();
+		obj.searchbtn();
+		
+	}
+	
+    @AfterTest
+	public void closebrowser() throws InterruptedException {
+		
+		Thread.sleep(4000);
+		driver.quit();
+	}
+	
+}
+
+
+
+# INTRODUNCTION TO JAVASCRIPT EXECUTOR IN SELENIUM:
+
+- JavaScript Executor in Selenium is a powerful interface that allows executing JavaScript commands directly within the context of the webpage.
+- This is particularly useful for interacting with web elements that are challenging to handle with traditional Selenium commands, such as elements that are hidden, complex animations, or dynamic content.
+- JavaScript Executor can also execute commands like scrolling, clicking, and entering text. In Selenium WebDriver, JavaScript Executor is implemented through the JavascriptExecutor interface.
+- This allows testers to perform tasks beyond Selenium's default capabilities, making it invaluable in automating interactions for complex webpages.
+
+## What is JavaScript Executor?
+
+Interface in Selenium that executes JavaScript commands within the webpage context.
+
+Useful for handling elements inaccessible via standard Selenium commands.
+
+## Why Use JavaScript Executor?
+
+- Interact with dynamic content and hidden elements.
+
+- Scroll, click, and set values in fields directly.
+
+- Bypass limitations of Selenium's standard methods.
+
+Key Methods of JavaScript Executor:
+
+executeScript(): Executes JavaScript commands on the page.
+
+executeAsyncScript(): Executes asynchronous JavaScript commands.
+
+## When to Use JavaScript Executor?
+
+- Elements not accessible through WebDriver commands.
+
+-For actions like scrolling and interacting with complex animations.
+
+Executing JavaScript Commands(1)
+
+## Executing JavaScript Commands
+
+### Setting Up JavaScript Executor:
+
+- Implemented via JavascriptExecutor interface.
+
+- Requires casting WebDriver instance to JavascriptExecutor.
+
+### Common Actions with JavaScript Executor:
+
+- Scroll to element: executeScript("arguments[0].scrollIntoView(true);", element);
+
+- Click on element: executeScript("arguments[0].click();", element);
+
+
+- Get page title: executeScript("return document.title;");
+
+- Set input field value: executeScript("arguments[0].value='test';", element);
+
+### **EX:**
+
+
+public class Javascriptexel {
+WebDriver driver;
+
+public void Chromebrowser() {
+		
+		driver = new ChromeDriver();
+}
+
+public void scrollmethod() {
+
+driver.get ("https://testautomationpractice.blogspot.com/*);
+driver.manage().window().maximize();
+// initialize Javascript executor
+
+JavascriptExecutor js=(JavascriptExecutor)driver;
+
+WebElement scrooltoelement=driver.findElement(By.id("textarea"));
+
+js. executeScript("arguments[0].scrollIntoView(true);",scrooltoelement);
+
+WebElement clickableelement=driver.findElement(By.id("textarea"));
+
+js. executeScript("arguments[0].click();",clickableelement);
+
+// set the value in text box
+
+WebElement inputfield=driver.findElement(By.id("textarea"));
+
+js.executeScript("arguments [0].value='Hyderabad';", inputfield);
+
+}
+
+public void closebrowswer() throws InterruptedException{
+
+Thread.sleep();
+driver.quit();
+
+}
+}
+
+## **Capturing(Taking Screenshot) using javascriptExecutor:**
+
+
+
+
+# **HTTPS VS HTTP:**
+
+###  **Configuring WebDriver for HTTPS:**
+
+
+.setacceptanceInsecureCerts(True); - if want
+.setacceptanceInsecureCerts(False); - if don't want
+
+Ex.
+public class Sampleprogramhttps {
+	
+	static WebDriver driver;
+    @Test
+	public void Launchbrowser() throws InterruptedException {
+    	
+
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://www.linkedin.com/");
+		System.out.println("HTTP site title is"+driver.getTitle());
+		
+		Thread.sleep(3000);
+		
+		driver.get("https://www.linkedin.com/");
+		System.out.println("HTTP site title is"+driver.getTitle());
+	}
+Ex.2
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class SeleniumHttpHttpsExample {
+    public static void main(String[] args) {
+        
+        // 1. Setup ChromeDriver using WebDriverManager (removes need for local path)
+        WebDriverManager.chromedriver().setup();
+
+        // 2. Configure ChromeOptions to handle HTTPS/SSL certificate issues
+        ChromeOptions options = new ChromeOptions();
+        
+        // Bypasses "Your connection is not private" warnings on HTTPS sites
+        options.setAcceptInsecureCerts(true); 
+        
+        // Alternative method to ignore certificate errors
+        options.addArguments("--ignore-certificate-errors"); 
+
+        // 3. Initialize the WebDriver with the specified options
+        WebDriver driver = new ChromeDriver(options);
+
+        try {
+            // TEST 1: Navigate to a standard HTTP site
+            System.out.println("Navigating to HTTP site...");
+            driver.get("http://purl.org"); // Example HTTP URL
+            System.out.println("HTTP Page Title: " + driver.getTitle());
+
+            // TEST 2: Navigate to a secure HTTPS site
+            System.out.println("\nNavigating to HTTPS site...");
+            driver.get("https://google.com");
+            System.out.println("HTTPS Page Title: " + driver.getTitle());
+
+            // TEST 3: Navigate to an HTTPS site with an EXPIRED certificate
+            // Without setAcceptInsecureCerts(true), Selenium would get stuck on the warning page.
+            System.out.println("\nNavigating to Expired HTTPS site...");
+            driver.get("https://expired.badssl.com/");
+            System.out.println("Expired Cert Page Title: " + driver.getTitle());
+
+            // 4. Verify the protocol of the current page
+            String currentUrl = driver.getCurrentUrl();
+            if (currentUrl.startsWith("https")) {
+                System.out.println("\nVerification: You are on a SECURE (HTTPS) connection.");
+            } else {
+                System.out.println("\nVerification: You are on an INSECURE (HTTP) connection.");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // 5. Close the browser
+            driver.quit();
+        }
+    }
+}
+
+
+## **Extend Reports for Selenium:**
+
+
+Extent API
+
+Extent API helps create beautiful, interactive and detailed reports for your tests
+
+Different views → dashboard view, graphical view, take screenshots as of reports, shareable reports which can be sent to users via email right after the test execution
+
+Extent API is written in Java and .NET for unit testing frameworks like JUnit, TestNG, NUnit, and many more
+
+Extent Reports library comes in the form of extentreports.jar file for Java
+
+
+
+Extent Reports Library
+
+- ExtentSparkReporter
+
+- ExtentReports
+
+- ExtentTest
+
+
+**Extent Reports Library Description:*
+
+
+
+Class Name                    Method Description
+
+ExtentSparkReporter           The ExtentSparkReporter creates a rich standalone HTML file. It allows several configuration options via the config() method. It supports both BDD and non-BDD test styles
+
+
+
+
+
+ExtentReports                  The ExtentReports report client for starting reporters and building reports. For most applications, you should have one ExtentReports instance for the entire JVM
+
+
+
+ExtentTest                      It defines a test. You can add logs, snapshots, assign author and categories to a test and its children
+
+
+
+MarkupHelper                   MarkupHelper is used to createLabel(), createCodeBlock(), createTable() in the report
+
+
+
+Status                         List of allowed status in log PASS, FAIL, FATAL, ERROR, WARNING, INFO, DEBUG, SKIP
+
+
+
+ExtentColor                    ExtentColor enumeration allows to displav log message in different colors.
+
+ADD DEPENDENCIES:
+
+<dependency>
+<groupId>com.aventstack</groupId>
+<artifactId>extentreports</artifactId>
+<version>5.1.2</version>
+</dependency>
+ 
+<dependency>
+    <groupId>commons-io</groupId>
+    <artifactId>commons-io</artifactId>
+    <version>2.21.0</version>
+    <scope>compile</scope>
+</dependency>
+ 
+
+Ex.
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+ 
+import org.testng.Assert;
+import org.testng.ITestResult;
+import org.testng.SkipException;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+ 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
+ 
+public class Sampleprogextentsreport {
+	
+	ExtentSparkReporter sr; //used to generate the HTML report.
+	ExtentReports er; //adding tests and attaching the reporters.
+	ExtentTest et; //Log information about individual tests in the report.
+ 
+	@Test
+  public void Test01() {
+	  et=er.createTest("Test01"); //Creates a new test case in the report with the name "Test01", and assigns it to the et variable.
+	  Assert.assertEquals("Hi", "Hi");
+	 // et.log(Status.PASS,MarkupHelper.createLabel("we are now running Test01",ExtentColor.GREEN));
+  }
+  @Test
+  public void Test02() {
+	  et=er.createTest("Test02"); //Creates a new test case in the report with the name "Test02"
+	  Assert.assertTrue(10>20);
+	 // et.log(Status.FAIL,MarkupHelper.createLabel("we are now running Test02",ExtentColor.ORANGE));
+  }
+  @Test
+  public void Test03() {
+	  et=er.createTest("Test03"); //Creates a new test case in the report with the name "Test03".
+	 //  et.log(Status.INFO,MarkupHelper.createLabel("we are now running Test03",ExtentColor.BLUE));
+	  throw new SkipException("Skipping this test exception");
+  }
+  @Test
+  public void Test04() {
+	  et = er.createTest("My Test 04");
+	  Assert.assertEquals("Ramana", "Ramana");
+  }
+ 
+   @BeforeMethod
+  public void beforeMethod() {
+ 
+ 
+  }
+ 
+  @AfterMethod
+  public void afterMethod(ITestResult result) {
+	  //ITestResult result captures the result of the test method execution (whether it passed, failed, or skipped).
+	  if(result.getStatus()==ITestResult.SUCCESS)
+		 {
+		  et.log(Status.PASS,MarkupHelper.createLabel("we passed "+result.getName(),ExtentColor.GREEN));
+		 }
+	  else if(result.getStatus()==ITestResult.FAILURE)
+		 {
+		  et.log(Status.FAIL,MarkupHelper.createLabel("we failed "+result.getName(),ExtentColor.RED));
+		 }
+	  else if(result.getStatus()==ITestResult.SKIP)
+		 {
+		  et.log(Status.SKIP,MarkupHelper.createLabel("we skipped "+result.getName(),ExtentColor.ORANGE));
+		 }
+  }
+ 
+  @BeforeTest
+  public void beforeTest() {
+	   //Constructs the file path for the report by combining the user's current directory with a timestamped HTML file name.
+	    String path=System.getProperty("user.dir")+"/ERResults/"+new SimpleDateFormat("dd-mm-yyyy-hh-mm-ss-ms").format(new Date())+".html";
+	    //Initializes the ExtentSparkReporter with the path, which will generate an HTML report at the specified location
+	    sr=new ExtentSparkReporter(path);
+	    //Creates a new instance of ExtentReports, which will manage the report.
+	    er=new ExtentReports();
+	    //Attaches the ExtentSparkReporter to the ExtentReports instance, linking the report to the HTML file.
+	    er.attachReporter(sr);
+ 
+	    er.setSystemInfo("Test","01"); //Adds system information (like the test name and user ID) to the report.
+	    sr.config().setDocumentTitle("My Report 01"); //Sets the title of the report document.
+	    sr.config().setReportName("Extent Report"); //Sets the name of the report.
+	    sr.config().setTheme(Theme.DARK); //Configures the theme of the report to dark mode
+  }
+ 
+  @AfterTest
+  public void afterTest() {
+	  er.flush(); //Ensures that all the test results are written to the report file. Without this, the report will not be generated or updated.
+  }
+ 
+ 
+}
+
+**Ex.2**
+
+public class extendreportfordemowebshop {
+	
+	ExtentSparkReporter sr; // used to generate the HTML report.
+	ExtentReports er; // adding tests and attaching the reporters.
+	ExtentTest et; // Log information about individual tests in the report.
+	static WebDriver driver;
+
+	@Test(priority =0)
+	public void URLCHECK() {
+	
+		et = er.createTest("TEST 01");
+		 driver = new ChromeDriver();
+		 driver.manage().window().maximize();
+	 
+		driver.get("https://demowebshop.tricentis.com/");
+		driver.findElement(By.linkText("Log in")).click();
+
+		String expectedurl = "https://demowebshop.tricentis.com/login";
+		String currentUrl = driver.getCurrentUrl();
+		Assert.assertEquals(currentUrl,expectedurl,"Expected value is  working as same");
+
+	}
+
+	@Test(priority =1)
+	public void LogoutCHECK() throws InterruptedException {
+		et = er.createTest("TEST 02"); 
+		driver.findElement(By.cssSelector("#Email")).sendKeys("dvdf@gmail.com");
+		Thread.sleep(2000);
+        driver.findElement(By.id("Password")).sendKeys("123456");
+        driver.findElement(By.xpath("//input[@value='Log in']")).click();
+        Thread.sleep(2000);
+        System.out.println("Login done");
+		driver.findElement(By.linkText("Log out")).click();
+        Thread.sleep(2000);
+        String expectedout = "Log out";
+        String actualout = "Log out1";
+		Assert.assertEquals(expectedout,actualout,"Expected value not matching");
+
+	}
+	
+	 @BeforeMethod
+	  public void beforeMethod() {
+		
+	 
+	  }
+	 
+	  @AfterMethod
+	  public void afterMethod(ITestResult result) {
+		  //ITestResult result captures the result of the test method execution (whether it passed, failed, or skipped).
+		  if(result.getStatus()==ITestResult.SUCCESS)
+			 {
+			  et.log(Status.PASS,MarkupHelper.createLabel("we passed "+result.getName(),ExtentColor.GREEN));
+			 }
+		  else if(result.getStatus()==ITestResult.FAILURE)
+			 {
+			  et.log(Status.FAIL,MarkupHelper.createLabel("we failed "+result.getName(),ExtentColor.RED));
+			 }
+		  else if(result.getStatus()==ITestResult.SKIP)
+			 {
+			  et.log(Status.SKIP,MarkupHelper.createLabel("we skipped "+result.getName(),ExtentColor.ORANGE));
+			 }
+	  }
+	 
+	  @BeforeTest
+	  public void beforeTest() {
+		   //Constructs the file path for the report by combining the user's current directory with a timestamped HTML file name.
+		    String path=System.getProperty("user.dir")+"/ERResults/"+new SimpleDateFormat("dd-mm-yyyy-hh-mm-ss-ms").format(new Date())+".html";
+		    //Initializes the ExtentSparkReporter with the path, which will generate an HTML report at the specified location
+		    sr=new ExtentSparkReporter(path);
+		    //Creates a new instance of ExtentReports, which will manage the report.
+		    er=new ExtentReports();
+		    //Attaches the ExtentSparkReporter to the ExtentReports instance, linking the report to the HTML file.
+		    er.attachReporter(sr);
+	 
+		    er.setSystemInfo("Test","02"); //Adds system information (like the test name and user ID) to the report.
+		    sr.config().setDocumentTitle("My Report 03"); //Sets the title of the report document.
+		    sr.config().setReportName("Extent Report"); //Sets the name of the report.
+		    sr.config().setTheme(Theme.DARK); //Configures the theme of the report to dark mode
+	  }
+	 
+	  @AfterTest
+	  public void afterTest() {
+		  er.flush(); //Ensures that all the test results are written to the report file. Without this, the report will not be generated or updated.
+	  }
+	 
